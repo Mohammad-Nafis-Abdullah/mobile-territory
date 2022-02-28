@@ -24,41 +24,53 @@
         
         <!--(search field)-->
         <div class="input-group mb-5 mx-auto w-75">
-            <input type="text" class="form-control" placeholder="Search Your Mobile" aria-label="Recipient's username"
+            <input id="search-field" type="text" class="form-control" placeholder="Search Your Mobile" aria-label="Recipient's username"
                 aria-describedby="basic-addon2">
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button onclick="loadData()" class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
         <!---->
     </header>
 
-    <!--(card details result)-->
 
-        <!--demo Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div>
-                            <h4 class="modal-title" id="exampleModalLabel">Phone Name</h4>
-                            <p class="modal-title text-secondary">secondary text</p>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    <!--(spinners)-->
+    <div id="spinner" class="justify-content-center my-5" style="display: none;">
+        <div class="spinner-border my-5" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <!---->
+
+
+
+    <!--(card details result in modal)-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h4 class="modal-title" id="exampleModalLabel">Phone Name</h4>
+                        <p class="modal-title text-secondary">secondary text</p>
                     </div>
-                    <div class="modal-body">
-                        <div class="card border border-none">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">main feature of phone </h5>
-                                <p class="card-text">main feature of phone </p>
-                            </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card border border-none">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">main feature of phone </h5>
+                            <p class="card-text">main feature of phone </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     <!---->
+
+
 
     <main class="container mx-auto">
         <!--(demo mobile card)-->
