@@ -121,8 +121,7 @@ const loadDetails = (id) => {
 const setDetails = (data) => {
     detailsArea.textContent = '';
     console.log(data);
-    // for (const data in datas) {
-        // console.log(data);
+
         const details = document.createElement('div');
         details.classList.add('modal-content');
 
@@ -136,16 +135,58 @@ const setDetails = (data) => {
             </div>
             <div class="modal-body">
                 <div class="card border border-0">
-                    <div class="card-img-top p-2 text-center" style="height: 200px;">
+                    <div class="card-img-top p-2 text-center mb-2" style="height: 200px;">
                         <img src="${data.image}" alt="..." style="max-width: 80%;">
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">main feature of phone </h5>
-                        <p class="card-text">main feature of phone </p>
+                    <div class="card-body row mt-3">
+                        <div id="features" class="col-12">
+                        <p class="fs-5 mb-2 fw-bold">Main Features</p>
+                        </div>
                     </div>
                 </div>
             </div>
         `
         detailsArea.appendChild(details);
-    // }
+        extractNestedObj(data.mainFeatures,'features');
+
+        if (data.others!=undefined) {
+            const p = document.createElement('p');
+            p.innerText = 'Others';
+            p.classList.add('fs-5');
+            p.classList.add('mt-3');
+            p.classList.add('mb-2');
+            p.classList.add('fw-bold');
+            document.getElementById('features').appendChild(p);
+
+            extractNestedObj(data.others,'features')
+        }
+}
+
+const extractNestedObj = (obj,id) => {
+    const parent = document.getElementById(id);
+
+    for (const key in obj) {
+        // console.log(`${key} : ${obj[key]}`);
+        const div = document.createElement('div');
+        div.classList.add('d-flex');
+        div.classList.add('justify-content-center');
+        div.classList.add('flex-wrap');
+        div.classList.add('align-items-stretch');
+        div.classList.add('ps-2');
+
+        if (key == 'sensors') {
+            const sensorsName = obj[key].join('\n,');
+            div.innerHTML=`
+            <p class="text-dark fs-6" style="flex: 0 0 30%">${key} :</p>
+            <p class="text-secondary fs-6" style="flex: 0 0 70%">${sensorsName}</p>
+        `;
+        }
+        else{
+            div.innerHTML=`
+            <p class="text-dark fs-6" style="flex: 0 0 30%">${key} :</p>
+            <p class="text-secondary fs-6" style="flex: 0 0 70%">${obj[key]}</p>
+        `;
+        }
+        parent.appendChild(div);
+    }
 }
