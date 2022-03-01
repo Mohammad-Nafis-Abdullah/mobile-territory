@@ -31,7 +31,7 @@ const noResult = () => {
     mssg.innerHTML=`
         <div class="card border-0 my-3">
             <div class="card-body text-danger d-inline-block mx-auto border border-danger rounded-3">
-                <h5 class="card-title text-center">No Result Found !!</h5>
+                <h5 class="card-title text-center">No Result Found For The Search !!</h5>
             </div>
         </div>
     `
