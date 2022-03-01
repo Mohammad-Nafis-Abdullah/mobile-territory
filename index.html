@@ -47,8 +47,8 @@
 
     <!--(card details result in modal)-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
+        <div id="details-modal" class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <!-- <div class="modal-content">
                 <div class="modal-header">
                     <div>
                         <h4 class="modal-title" id="exampleModalLabel">Phone Name</h4>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <!---->
@@ -73,6 +73,7 @@
 
 
     <main class="container mx-auto mb-5">
+        <h5 id="counter-container" class="text-center mb-5" style="display: none;"><span id="result-counter"></span> result found</h5>
         <!--(content => card updating here)-->
         <div class="row g-3" id="content">
             <!-- card dynamically created here -->

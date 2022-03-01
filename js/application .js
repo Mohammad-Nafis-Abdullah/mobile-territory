@@ -2,10 +2,13 @@ const searchText = document.getElementById('search-field');
 const spinner = document.getElementById('spinner');
 const content = document.getElementById('content');
 const showBtn = document.getElementById('show-btn');
-
+const detailsArea = document.getElementById('details-modal');
+const counterArea = document.getElementById('counter-container').style;
+const resultCount = document.getElementById('result-counter');
+let newdataSet;
 
 // fetching data from url and pass to the calling function; url = api_url  && fn = function name, which is declare to recieve the fetching data for nxt operation;
-const getData = (url,fn) => {
+const loadData = (url,fn) => {
     loading('flex');
     fetch(url)
     .then(response => response.json())
@@ -13,6 +16,7 @@ const getData = (url,fn) => {
         if(data.status && searchText.value!=''){
             fn(data);
         }else{
+            counterArea.display='none';
             loading('none');
             noResult();
         }
@@ -31,7 +35,7 @@ const noResult = () => {
     mssg.innerHTML=`
         <div class="card border-0 my-3">
             <div class="card-body text-danger d-inline-block mx-auto border border-danger rounded-3">
-                <h5 class="card-title text-center">No Result Found For The Search !!</h5>
+                <h5 class="card-title text-center">No Result Found !!</h5>
             </div>
         </div>
     `
@@ -52,7 +56,24 @@ const sendUrl = () => {
     loading('none');
     toggleBtn('none')
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText.value}`;
-    getData(url,countCard);
+    loadData(url,countCard);
+}
+
+// count the result for a search operation
+const countCard = (dataSet) => {
+    loading('none');
+    newdataSet = dataSet.data;
+
+    // show quantity of searching result
+    resultCount.innerText = newdataSet.length;
+    counterArea.display='block';
+
+    if (newdataSet.length > 20) {
+        displayCard(newdataSet.slice(0,20),'grid');
+    }
+    else {
+        displayCard(newdataSet,'none');
+    }
 }
 
 // display card in the content body
@@ -70,7 +91,7 @@ const displayCard = (array,btnProperty) => {
                 <div class="text-center mt-auto">
                     <h5 class="card-title">${data.phone_name}</h5>
                     <p class="card-text">${data.brand}</p>
-                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button onclick="loadDetails('${data.slug}')" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Details
                     </button>
                 </div>
@@ -81,23 +102,50 @@ const displayCard = (array,btnProperty) => {
     toggleBtn(btnProperty);
 }
 
-// globally set for using in 2 function
-let newdataSet;
-
-// count the result for a search operation
-const countCard = (dataSet) => {
-    loading('none');
-    newdataSet = dataSet.data;
-    
-    if (newdataSet.length > 20) {
-        displayCard(newdataSet.slice(0,20),'grid');
-    }
-    else {
-        displayCard(newdataSet,'none');
-    }
-}
-
 // showAll() will be called if search result is more than 20
 const showAll = () => {
     displayCard(newdataSet,'none');
+}
+
+// load Details data for clicked card
+const loadDetails = (id) => {
+    // console.log(id);
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+    fetch(url)
+    .then(response => response.json())
+    .then(dataSet => setDetails(dataSet.data))
+}
+
+
+// set details data after clicking an individual card
+const setDetails = (data) => {
+    detailsArea.textContent = '';
+    console.log(data);
+    // for (const data in datas) {
+        // console.log(data);
+        const details = document.createElement('div');
+        details.classList.add('modal-content');
+
+        details.innerHTML=`
+            <div class="modal-header">
+                <div>
+                    <h4 class="modal-title" id="exampleModalLabel">${data.name}</h4>
+                    <p class="modal-title text-secondary">${data.releaseDate!=''?data.releaseDate:"Unknown Release Date"}</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card border border-0">
+                    <div class="card-img-top p-2 text-center" style="height: 200px;">
+                        <img src="${data.image}" alt="..." style="max-width: 80%;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">main feature of phone </h5>
+                        <p class="card-text">main feature of phone </p>
+                    </div>
+                </div>
+            </div>
+        `
+        detailsArea.appendChild(details);
+    // }
 }
