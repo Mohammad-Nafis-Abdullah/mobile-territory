@@ -104,7 +104,7 @@ const displayCard = (array,btnProperty) => {
 
 // showAll() will be called if search result is more than 20
 const showAll = () => {
-    displayCard(newdataSet,'none');
+    displayCard(newdataSet.slice(20),'none');
 }
 
 // load Details data for clicked card
