@@ -7,6 +7,13 @@ const counterArea = document.getElementById('counter-container').style;
 const resultCount = document.getElementById('result-counter');
 let newdataSet;
 
+// active enter button for searching
+searchText.addEventListener('keyup',(event)=>{
+    if (event.key=='Enter') {
+        sendUrl();
+    }
+})
+
 // fetching data from url and pass to the calling function; url = api_url  && fn = function name, which is declare to recieve the fetching data for nxt operation;
 const loadData = (url,fn) => {
     loading('flex');
