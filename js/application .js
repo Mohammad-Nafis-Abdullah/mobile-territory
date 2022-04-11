@@ -182,7 +182,7 @@ const extractNestedObj = (obj,id) => {
         div.classList.add('ps-2');
 
         if (key == 'sensors') {
-            const sensorsName = obj[key].join('\n,');
+            const sensorsName = obj[key].join(',\n');
             div.innerHTML=`
             <p class="text-dark fs-6" style="flex: 0 0 30%">${key} :</p>
             <p class="text-secondary fs-6" style="flex: 0 0 70%">${sensorsName}</p>
