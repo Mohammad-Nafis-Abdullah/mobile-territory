@@ -16,7 +16,7 @@
     
     <title>Mobile's Territory</title>
 </head>
-<body>
+<body onload="initialLoad()">
     <header class="container my-4 mx-auto">
         <!--(site name)-->
         <h3 class="text-center"><i class="fa-solid fa-mobile-screen-button me-2"></i>Mobile's Territory</h3>
@@ -24,10 +24,10 @@
         
         <!--(search field)-->
         <div class="input-group mb-5 mx-auto w-75">
-            <input id="search-field" type="text" class="form-control" placeholder="Search Your Mobile" aria-label="Recipient's username"
-                aria-describedby="basic-addon2">
+            <input id="search-field" type="text" class="form-control fw-bold" placeholder="Search Your Mobile" aria-label="Recipient's username"
+                aria-describedby="basic-addon2" value="Apple">
             <div class="input-group-append">
-                <button onclick="sendUrl()" class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button id="search-btn" class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
         <!---->

@@ -1,4 +1,5 @@
 const searchText = document.getElementById('search-field');
+const searchBtn = document.getElementById('search-btn');
 const spinner = document.getElementById('spinner');
 const content = document.getElementById('content');
 const showBtn = document.getElementById('show-btn');
@@ -7,12 +8,29 @@ const counterArea = document.getElementById('counter-container').style;
 const resultCount = document.getElementById('result-counter');
 let newdataSet;
 
+const togglePlaceholder = ()=> {
+    searchText.placeholder=searchText.value;
+    searchText.value='';
+}
+
+const initialLoad = ()=> {
+    sendUrl();
+    togglePlaceholder();
+}
+
+
 // active enter button for searching
 searchText.addEventListener('keyup',(event)=>{
     if (event.key=='Enter') {
         sendUrl();
+        togglePlaceholder();
     }
 })
+searchBtn.addEventListener('click',()=> {
+    sendUrl();
+    togglePlaceholder();
+})
+
 
 // fetching data from url and pass to the calling function; url = api_url  && fn = function name, which is declare to recieve the fetching data for nxt operation;
 const loadData = (url,fn) => {
@@ -20,7 +38,7 @@ const loadData = (url,fn) => {
     fetch(url)
     .then(response => response.json())
     .then(data => {
-        if(data.status && searchText.value!=''){
+        if(data.status){
             fn(data);
         }else{
             counterArea.display='none';
@@ -116,7 +134,6 @@ const showAll = () => {
 
 // load Details data for clicked card
 const loadDetails = (id) => {
-    // console.log(id);
     const url = `https://openapi.programming-hero.com/api/phone/${id}`;
     fetch(url)
     .then(response => response.json())
@@ -127,7 +144,6 @@ const loadDetails = (id) => {
 // set details data after clicking an individual card
 const setDetails = (data) => {
     detailsArea.textContent = '';
-    console.log(data);
 
         const details = document.createElement('div');
         details.classList.add('modal-content');
@@ -173,7 +189,6 @@ const extractNestedObj = (obj,id) => {
     const parent = document.getElementById(id);
 
     for (const key in obj) {
-        // console.log(`${key} : ${obj[key]}`);
         const div = document.createElement('div');
         div.classList.add('d-flex');
         div.classList.add('justify-content-center');
